@@ -6,6 +6,7 @@ import (
 )
 
 type Config struct {
+	Host string
 	Port string
 }
 
@@ -21,6 +22,7 @@ func CreateConfig(fileName ...string) (*Config, error) {
 		json.NewDecoder(file).Decode(config)
 	} else {
 		config = &Config{
+			"127.0.0.1",
 			"8080",
 		}
 	}

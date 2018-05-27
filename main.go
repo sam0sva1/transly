@@ -1,11 +1,17 @@
 package main
 
-import "fmt"
+import (
+	//"fmt"
+
+)
+
+var err error
 
 func main() {
 	config, err := CreateConfig("config.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(config)
+	chkErr(err)
+
+	server := Server{config:config}
+
+	server.Run()
 }
