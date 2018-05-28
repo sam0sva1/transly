@@ -1,16 +1,24 @@
-package main
+package config
 
 import (
-	"os"
 	"encoding/json"
+	"os"
 )
+
+type DBConfig struct {
+	Name    string
+	Host    string
+	Port    int
+	Sslmode string
+}
 
 type Config struct {
 	Host string
 	Port string
+	DB   DBConfig
 }
 
-func CreateConfig(fileName ...string) (*Config, error) {
+func Create(fileName ...string) (*Config, error) {
 	var config *Config
 	if len(fileName) > 0 {
 		file, err := os.Open(fileName[0])
@@ -24,6 +32,12 @@ func CreateConfig(fileName ...string) (*Config, error) {
 		config = &Config{
 			"127.0.0.1",
 			"8080",
+			DBConfig{
+				"transly",
+				"localhost",
+				5432,
+				"disable",
+			},
 		}
 	}
 

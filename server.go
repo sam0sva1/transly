@@ -3,12 +3,15 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"transly/config"
+	"transly/dbdrive"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
-	config *Config
+	config          *config.Config
+	exerciseService *dbdrive.ExerciseService
 }
 
 func (s *Server) Handler() *gin.Engine {
@@ -18,6 +21,11 @@ func (s *Server) Handler() *gin.Engine {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "It works!",
 		})
+	})
+
+	router.GET("/exercises", func(c *gin.Context) {
+		exercises := s.exerciseService.GetCollection()
+		c.JSON(http.StatusOK, gin.H{"exercises": exercises})
 	})
 
 	return router
