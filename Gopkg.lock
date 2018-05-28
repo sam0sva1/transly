@@ -55,6 +55,12 @@
   version = "v0.0.3"
 
 [[projects]]
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
+  version = "v1.2.0"
+
+[[projects]]
   name = "github.com/ugorji/go"
   packages = ["codec"]
   revision = "b4c50a2b199d93b13dc15e78929cfb23bfdf21ab"
@@ -81,6 +87,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c6941af7e04c815a6cbce136dfd0ceffdd91bb7d2750419712c3b1e7a1d6332b"
+  inputs-digest = "ad652f2f718561f354e5a09ff2e86c54c854592992d3ba01c92f3d2cff6ac3a5"
   solver-name = "gps-cdcl"
   solver-version = 1
