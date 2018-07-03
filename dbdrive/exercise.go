@@ -8,9 +8,9 @@ import (
 
 type Exercise struct {
 	gorm.Model
-	Rus  string  `gorm:"type:text;not null"`
-	Eng  string  `gorm:"type:text;not null"`
-	Rank float32 `gorm:"type:decimal;not null;default:0"`
+	Rus  string  `json:"rus" gorm:"type:text;not null"`
+	Eng  string  `json:"eng" gorm:"type:text;not null"`
+	Rank float32 `json:"rank" gorm:"type:decimal;not null;default:0"`
 }
 
 type ExerciseRepository struct {

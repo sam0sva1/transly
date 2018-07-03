@@ -43,7 +43,7 @@ func collect(list []OldEx) []NewEx {
 		if len(oldOne.Ru) == len(oldOne.En) {
 			innerLen := len(oldOne.Ru)
 			for i := 0; i < innerLen; i++ {
-				id := uuid.Must(uuid.NewV4())
+				id := uuid.NewV4()
 				ex := NewEx{
 					ID:   fmt.Sprintf("%s", id),
 					Rus:  oldOne.Ru[i],
