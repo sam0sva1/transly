@@ -12,11 +12,12 @@ func main() {
 	config, err := config.Create("config.json")
 	tools.Chk(err)
 
-	connection := dbdrive.Connect(config)
+	connection := dbdrive.Connect(config, true)
 
 	server := Server{
 		config:          config,
 		exerciseService: connection.CreateExerciseService(),
+		userService:     connection.CreateUserService(),
 	}
 
 	server.Run()

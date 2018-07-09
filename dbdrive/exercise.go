@@ -1,36 +1,35 @@
 package dbdrive
 
 import (
+	"time"
 	"transly/config"
 
 	"github.com/jinzhu/gorm"
 )
 
 type Exercise struct {
-	gorm.Model
-	Rus  string  `json:"rus" gorm:"type:text;not null"`
-	Eng  string  `json:"eng" gorm:"type:text;not null"`
-	Rank float32 `json:"rank" gorm:"type:decimal;not null;default:0"`
+	ID        uint       `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"deleted_at"`
+	Rus       string     `json:"rus" gorm:"type:text;not null"`
+	Eng       string     `json:"eng" gorm:"type:text;not null"`
+	Rank      float32    `json:"rank" gorm:"type:integer;not null;default:0"`
 }
 
 type ExerciseRepository struct {
 	db *gorm.DB
 }
 
-func (repo *ExerciseRepository) GetCollection(args ...int) []*Exercise {
+type ExerciseParams struct {
+	Limit  int
+	Offset int
+}
+
+func (repo *ExerciseRepository) GetCollection(params ExerciseParams) []*Exercise {
 	var exercises []*Exercise
-	limit := 10
-	offset := -1
 
-	switch len(args) {
-	case 1:
-		limit = args[0]
-	case 2:
-		limit = args[0]
-		offset = args[1]
-	}
-
-	repo.db.Limit(limit).Offset(offset).Find(&exercises)
+	repo.db.Limit(params.Limit).Offset(params.Offset).Find(&exercises)
 	return exercises
 }
 
@@ -44,9 +43,8 @@ type ExerciseService struct {
 }
 
 // GetCollection is the best place to make some constrains according to config
-func (es *ExerciseService) GetCollection(args ...int) []*Exercise {
-	// es.config
-	return es.repository.GetCollection(args...)
+func (es *ExerciseService) GetCollection(params ExerciseParams) []*Exercise {
+	return es.repository.GetCollection(params)
 }
 
 func (conn *Connection) CreateExerciseService() *ExerciseService {

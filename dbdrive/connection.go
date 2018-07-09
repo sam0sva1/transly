@@ -16,10 +16,12 @@ type Connection struct {
 	config *config.Config
 }
 
-func Connect(config *config.Config) *Connection {
+func Connect(config *config.Config, withMigrations bool) *Connection {
 	dbConf := config.DB
 	params := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=%s", dbConf.Host, dbConf.Port, dbConf.Name, dbConf.Sslmode)
 	db, err := gorm.Open("postgres", params)
+
+	db.LogMode(true)
 
 	tools.Chk(err)
 
@@ -27,5 +29,10 @@ func Connect(config *config.Config) *Connection {
 		db:     db,
 		config: config,
 	}
+
+	if withMigrations {
+		db.AutoMigrate(&User{}, &Exercise{})
+	}
+
 	return conn
 }
