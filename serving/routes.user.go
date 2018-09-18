@@ -1,4 +1,4 @@
-package main
+package serving
 
 import (
 	"net/http"
@@ -19,7 +19,7 @@ func InitUserRoutes(server *Server) {
 			return
 		}
 
-		user, ok := server.userService.GetUserById(id)
+		user, ok := server.UserService.GetUserById(id)
 		if ok {
 			c.String(http.StatusNotFound, "No user with this id")
 			return
@@ -45,13 +45,13 @@ func InitUserRoutes(server *Server) {
 				return
 			}
 
-			isExist := server.userService.Check(user)
+			isExist := server.UserService.Check(user)
 			if isExist {
 				c.JSON(http.StatusBadRequest, gin.H{"error": "This login is in use."})
 				return
 			}
 
-			err = server.userService.Create(user)
+			err = server.UserService.Create(user)
 			if err != nil {
 				c.JSON(http.StatusBadRequest, gin.H{"error": err})
 				return

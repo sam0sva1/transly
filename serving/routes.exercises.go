@@ -1,4 +1,4 @@
-package main
+package serving
 
 import (
 	"net/http"
@@ -23,7 +23,7 @@ func InitExerciseRoutes(server *Server) {
 			Limit:  limit,
 			Offset: offset,
 		}
-		exercises := server.exerciseService.GetCollection(params)
+		exercises := server.ExerciseService.GetCollection(params)
 
 		c.JSON(http.StatusOK, gin.H{"exercises": exercises})
 	})

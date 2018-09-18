@@ -3,6 +3,7 @@ package main
 import (
 	"transly/config"
 	"transly/dbdrive"
+	"transly/serving"
 	"transly/tools"
 )
 
@@ -14,10 +15,10 @@ func main() {
 
 	connection := dbdrive.Connect(config, true)
 
-	server := Server{
-		config:          config,
-		exerciseService: connection.CreateExerciseService(),
-		userService:     connection.CreateUserService(),
+	server := serving.Server{
+		Config:          config,
+		ExerciseService: connection.CreateExerciseService(),
+		UserService:     connection.CreateUserService(),
 	}
 
 	server.Run()

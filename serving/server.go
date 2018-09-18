@@ -1,4 +1,4 @@
-package main
+package serving
 
 import (
 	"fmt"
@@ -12,9 +12,9 @@ import (
 )
 
 type Server struct {
-	config          *config.Config
-	exerciseService *dbdrive.ExerciseService
-	userService     *dbdrive.UserService
+	Config          *config.Config
+	ExerciseService *dbdrive.ExerciseService
+	UserService     *dbdrive.UserService
 }
 
 var router *gin.Engine
@@ -38,9 +38,9 @@ func (s *Server) Handlers() *gin.Engine {
 }
 
 func (server *Server) Run() {
-	fmt.Printf("Server starts on http://%s:%s", server.config.Host, server.config.Port)
+	fmt.Printf("Server starts on http://%s:%s", server.Config.Host, server.Config.Port)
 
 	Engine := server.Handlers()
 
-	Engine.Run(server.config.Host + ":" + server.config.Port)
+	Engine.Run(server.Config.Host + ":" + server.Config.Port)
 }
